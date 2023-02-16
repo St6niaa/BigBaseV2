@@ -11,6 +11,3 @@ JustGabriel
 # 🎮 Version
 Crossmapping and pointers: GTAV 1.64 build 2802 \
 Status: Updated and WORKING (01/02/2022)
-# 🎡 Contact
-
-If you having problems or same like that, please, contact me in discord: St6nia#3253
