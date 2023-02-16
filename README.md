@@ -5,8 +5,7 @@ Hello! This is BigBaseV2 fixed that I made, I hope you like that and that it is 
 
 # ❄ Credits
 
-Pocakking \
-JustGabriel 
+Pocakking
 
 # 🎮 Version
 Crossmapping and pointers: GTAV 1.64 build 2802 \
