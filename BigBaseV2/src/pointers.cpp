@@ -9,7 +9,7 @@ namespace big
 	{
 		memory::pattern_batch main_batch;
 
-		main_batch.add("Game state", "83 3D ? ? ? ? ? 75 17 8B 43 20 25", [this](memory::handle ptr)
+		main_batch.add("Game State", "83 3D ? ? ? ? ? 75 17 8B 43 20 25", [this](memory::handle ptr)
 			{
 				m_game_state = ptr.add(2).rip().as<eGameState*>();
 			});
@@ -23,6 +23,7 @@ namespace big
 			{
 				m_ped_factory = ptr.add(3).rip().as<CPedFactory**>();
 			});
+
 
 		main_batch.add("Network player manager", "48 8B 0D ? ? ? ? 8A D3 48 8B 01 FF 50 ? 4C 8B 07 48 8B CF", [this](memory::handle ptr)
 			{

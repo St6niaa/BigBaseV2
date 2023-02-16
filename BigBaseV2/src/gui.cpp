@@ -8,6 +8,7 @@
 #include "memory/pattern.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
+#include "features.hpp"
 #include "renderer.hpp"
 #include "script.hpp"
 
@@ -96,29 +97,24 @@ namespace big
 
 	void gui::dx_on_tick()
 	{
-		if (ImGui::Begin("BigBaseV2"))
+		if (ImGui::Begin("BigBaseV2 1.66"))
 		{
-			static bool demo_bool = true;
-			static int demo_int = 1;
-			static float demo_float = 1.f;
 
-			static const char *demo_combo[]
+			ImGui::Checkbox("Godmode", &g_features.godmode);
+			ImGui::Checkbox("Never Wanted", &g_features.nopolice);
+			if (ImGui::Button("Clean Ped"))
 			{
-				"One",
-				"Two",
-				"Three"
-			};
-			static int demo_combo_pos = 0;
 
-			ImGui::Checkbox("Bool", &demo_bool);
-			ImGui::SliderInt("Int", &demo_int, 0, 10);
-			ImGui::SliderFloat("Float", &demo_float, 0.f, 10.f);
-			ImGui::Combo("Combo", &demo_combo_pos, demo_combo, sizeof(demo_combo) / sizeof(*demo_combo));
+				Ped player_ped = PLAYER::PLAYER_PED_ID();
 
-			if (ImGui::Button("Spawn a vehicle"))
+				PED::CLEAR_PED_BLOOD_DAMAGE(player_ped);
+				PED::CLEAR_PED_WETNESS(player_ped);
+				PED::CLEAR_PED_ENV_DIRT(player_ped);
+				PED::RESET_PED_VISIBLE_DAMAGE(player_ped);
+			}
+
+			if (ImGui::Button("Spawn a vehicle (DOESNT WORK)"))
 			{
-				g_fiber_pool->queue_job([]
-				{
 					constexpr auto hash = RAGE_JOAAT("adder");
 					while (!STREAMING::HAS_MODEL_LOADED(hash))
 					{
@@ -127,7 +123,8 @@ namespace big
 					}
 
 					auto pos = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), true);
-					auto vehicle = VEHICLE::CREATE_VEHICLE(hash, pos.x, pos.y, pos.z, 0.f, true, true);
+					auto vehicle = VEHICLE::CREATE_VEHICLE(hash, pos.x, pos.y, pos.z, 0.f, true, true, 0);
+
 					
 					if (*g_pointers->m_is_session_started)
 					{
@@ -135,7 +132,7 @@ namespace big
 					}
 
 					STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
-				});
+
 			}
 
 			ImGui::Separator();
@@ -154,9 +151,10 @@ namespace big
 
 	void gui::script_on_tick()
 	{
+		
 		if (g_gui.m_opened)
 		{
-			CONTROLS::DISABLE_ALL_CONTROL_ACTIONS(0);
+			PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
 		}
 	}
 

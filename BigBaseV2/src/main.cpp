@@ -23,27 +23,16 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			{
 				
 				LOG_RAW(log_color::green | log_color::intensify,
-u8R"kek(                     ...
-                   ;::::;
-                 ;::::; :;
-               ;:::::'   :;
-              ;:::::;     ;.
-             ,:::::'       ;           OOO\
-             ::::::;       ;          OOOOO\
-             ;:::::;       ;         OOOOOOOO
-            ,;::::::;     ;'         / OOOOOOO
-          ;:::::::::`. ,,,;.        /  / DOOOOOO
-        .';:::::::::::::::::;,     /  /     DOOOO
-       ,::::::;::::::;;;;::::;,   /  /        DOOO
-      ;`::::::`'::::::;;;::::: ,#/  /          DOOO
-      :`:::::::`;::::::;;::: ;::#  /            DOOO
-      ::`:::::::`;:::::::: ;::::# /              DOO
-      `:`:::::::`;:::::: ;::::::#/               DOO
-       :::`:::::::`;; ;:::::::::##                OO
-       ::::`:::::::`;::::::::;:::#                OO
-       `:::::`::::::::::::;'`:;::#                O
-        `:::::`::::::::;' /  / `:#
-         ::::::`:::::;'  /  /   `#
+u8R"kek(
+
+                                         
+ _____ _     _____             _____ ___ 
+| __  |_|___| __  |___ ___ ___|  |  |_  |
+| __ -| | . | __ -| .'|_ -| -_|  |  |  _|
+|_____|_|_  |_____|__,|___|___|\___/|___|  
+        |___|                            
+                                                          1.66 | b2824
+
 
 )kek");
 				
@@ -74,19 +63,17 @@ u8R"kek(                     ...
 				auto hooking_instance = std::make_unique<hooking>();
 				LOG_INFO("Hooking initialized.");
 
-				g_script_mgr.add_script(std::make_unique<script>(&features::script_func));
 				g_script_mgr.add_script(std::make_unique<script>(&gui::script_func));
+				g_script_mgr.add_script(std::make_unique<script>(&featuress::script_func));
 				LOG_INFO("Scripts registered.");
 
 				g_hooking->enable();
 				LOG_INFO("Hooking enabled.");
 
-				LOG_INFO("Thank you for using bbv2 by JustGabriel <3");
-
 
 				while (g_running)
 				{
-					if (GetAsyncKeyState(VK_END) & 0x8000)
+					if (GetAsyncKeyState(VK_DELETE) & 0x8000)
 						g_running = false;
 
 					g_hooking->ensure_dynamic_hooks();
